@@ -11,23 +11,23 @@ A note on using this code: The code contains many plots, when ran all at once so
 We start by importing the python modules we'll be using for our analysis. Primarily, these are: Pandas, Matplotlib and Seaborn.
 Next we use a Pandas function 
 	
-	df = (pd.read_csv)  1.
+	1. df = (pd.read_csv)  
 	
 to read our data set in from our machine. "df" is the shorthand name for our data-set hereafter. 
 The Iris set can also be read in our programme with Seaborn by using the below
 	
-	iris = sns.load_dataset('iris') 2.
+	2. iris = sns.load_dataset('iris') 
 
 With the data set in hand we're ready to analyse. I start by using two useful Pandas methods "df.info()" and "df.describe()".
 	
-	df.info() 3. 
+	3. df.info() 
 
 The "info" method tells us how many columns are in the data-set, the type and quantity of data contained in the set and also if there 
 are any empty variables or null values. Here we have four floats, one categorical object and no null values. If we had any null values now would be a good time to remove or
 replace them with dummy variables so as not to interfere with our analysis. Pandas' "info" method also tells us how much memory the programme uses, which would be more
 important if we were dealing with a vary large data-set.  
 
-	df.describe() 4.
+	4. df.describe() 
 	
 The "describe" method outputs a variety of useful statistics from our data-set, more so for numerical data but by adding 
 "(include='all') we can include any categorical data. In this case "species", telling us there are three distinct types with a frequency 
@@ -48,7 +48,7 @@ Histograms
 Our next step is to graphically represent our data using Seaborn. First we plot histograms for the three species, showing the frequency of each plants scores 
 in sepal/petal length/width. To do this we use the seaborn method of plotting histograms, starting with sepal length.
 
-	sns.histplot(data = df, x = 'sepal_length', hue = "species", multiple="dodge") 5.1
+	5.1 sns.histplot(data = df, x = 'sepal_length', hue = "species", multiple="dodge") 
 
 Seaborn lets us choose the axis we want to display our data along by naming our variable, e.g. "sepal length" either "x" or "y". Setting "hue" to "species" then 
 tells it to divide the scores (by colour) according to our categorical variable type, species. Finally by using "multiple="dodge"" we can tell seaborn to place the bars
@@ -61,14 +61,14 @@ Conversely if the sepal is very short it's likely a Setosa.
 
 Our next histogram, created with the below code shows a similar pattern but for petal length.
 
-	sns.histplot(data = df, x = 'petal_length', hue = "species", multiple="dodge")  5.2
+	5.2 sns.histplot(data = df, x = 'petal_length', hue = "species", multiple="dodge")  
 
 Iris-Setosa is distinctly shorter than it's peers, with all of it's scores in a range of 1-2cm. Meanwhile Iris-Virginica is again the longest with most of it's scores between 
 5.5 and 6 and it's highest coming in at 7. Iris-Versicolor is again the middle value but this time with less overlap than in sepal length. Meaning when it comes to petal 
 petal length we can be reasonably assured a length of 1-2cm indicates a Setosa, a length of 3-5cm a Versicolor and a length of 5-7 a Virginica. Briefly summarised, 
 our findings on length are that Iris-Setosa is the shortest, Virginica is the longest. Now we move on to width.
 
-	sns.histplot(data = df, x = 'sepal_width', hue = "species", multiple="dodge") 5.3
+	5.3 sns.histplot(data = df, x = 'sepal_width', hue = "species", multiple="dodge") 
 
 Looking at sepal width, we can see a much denser distribution around 2.5 and 3.5cm for each species. On the wider end of the spectrum sit's the Setosa while the narrowest 
 plant is the Versicolor. Iris-Virginica occupies the middle when it comes to width. Overall though these scores are much closer together and therefore less likely 
@@ -76,7 +76,7 @@ to be reliable predictors of species type by themselves. Though taken with our p
 
 Finally, to petal width.
 
-	sns.histplot(data = df, x = 'petal_width', hue = "species", multiple="dodge") 5.4
+	5.4 sns.histplot(data = df, x = 'petal_width', hue = "species", multiple="dodge") 
 
 And we can see this looks a lot like the graph for petal length, which may lead us to suppose there will be a strong positive correlation between petal length and width, 
 a supposition we will test shortly. Unlike it's sepal, the Setosa's petal is quite small, with all of it's scores coming between 0.1 and 0.5cm. Iris-Versicolor comprises
@@ -91,7 +91,7 @@ Virginica and less again than for Setosa.
 Line Plots
 We can see the same result via a series of line plots for each numerical variable given below.
 
-	plot = sns.FacetGrid(df, col="species") 6. 
+	6. plot = sns.FacetGrid(df, col="species")  
 
 	plot.map(plt.plot, "sepal_length")
 
@@ -109,18 +109,18 @@ Correlations
 Earlier we noted a striking similarity in the histograms for petal length and petal width and using python we can confirm this, and also tell if there are any other interesting correlations we may have missed. 
 We do this with the following code
 
-	print(df.corr()) 7. 
+	7. print(df.corr()) 
 
 We can also make this look nicer with a correlation heatmap courtesy of Seaborn via the following code
 
-	dataplot = sns.heatmap(df.corr(), cmap="YlGnBu", annot=True) 8. 
+	8. dataplot = sns.heatmap(df.corr(), cmap="YlGnBu", annot=True) 
 
 Here "cmap" chooses the colour scheme while "annot=True" tells python to display the numerical value of each correlation on the heatmap. We can see a very strong positive correlation 
 at 0.96 for petal length and petal width, as suspected. Petal length and sepal length also share a strong positive correlation of 0.87, as do sepal length and petal width at 0.82. In addition there are weak 
 negative correlations for sepal width and petal length (-0.42), and for sepal width and petal width (-0.36). Finally there is an almost no relation whatsoever between sepal length and sepal width (-0.11). 
 Looking back at our line plots we can also see these relationships. But there is another way to visualise them all at once again using Seaborn. The method
 
-	sns.pairplot(df, hue='species', height=2) 9.
+	9. sns.pairplot(df, hue='species', height=2) 
 
 lets us see the relationships between each pair of variables for each species all at once. It gives us the same picture as the heatmap but is comprised of the individual data points in the set. 
 
