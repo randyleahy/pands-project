@@ -56,7 +56,7 @@ side by side, rather than overlapping, or stacking.
 
 The resulting histogram shows that the Setosa plant has the shortest 
 sepal length, with most of it's scores clustered between 4.5 and 5.5cm. Iris-Virginica has the largest sepal length with most of it's scores clustered between 6 and 8cm. 
-Iris-Versicolor occupies the middle range between the two. This implies if we're looking at sepal length alone, an Iris plant with a very long sepal it's likely a Virginica. 
+Iris-Versicolor occupies the middle range between the two. This implies if we're looking at sepal length alone, an Iris plant with a very long sepal is likely a Virginica. 
 Conversely if the sepal is very short it's likely a Setosa. 
 
 Our next histogram, created with the below code shows a similar pattern but for petal length.
