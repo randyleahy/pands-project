@@ -5,10 +5,10 @@ Chris Foley PANDS Project
 Analysis of the Iris-Fisher data set
 This document runs through and explains my programmatic analysis of the Iris-Fisher data-set. The Iris data-set is comprised of 150 observations of 5 variables, 
 sepal length and width, petal length and width and species. There are three species included, Iris Setosa, Iris Versicolor and Iris Virginica, with 50 measurements 
-of sepal and petal length and width for each. The Iris set is widely used for training aspiring data scientists and machines alike. 
-A note on using this code: The code contains many plots, when ran all at once some of these will overlap each other. I recommend commenting out any lines containing plots not presently in use to get the intended graph.
+of sepal and petal length and width for each. The Iris set is widely used for training aspiring data scientists and machines alike. For data scientists it's a small and manageable data set to try out the tricks and tools of the trade. For those working in the field of machine learning, it provides a useful test case for algorithims designed to pick types from data sets without prior knowledge of what or how many types exist in the set, for example in Kmeans or Kmediod clustering. This analysis shows a little bit of what python can do with a data set.
+A note on using the source code: The code contains many plots, when ran all at once some of these will overlap each other. I recommend commenting out any lines containing plots not presently in use to get the intended graph.
 
-We start by importing the python modules we'll be using for our analysis. Primarily, these are: Pandas, Matplotlib and Seaborn.
+We start by importing the python modules we'll be using for our analysis. Primarily, these are: Pandas, Matplotlib and Seaborn and Sklearn.
 Next we use a Pandas function 
 	
 	1. df = (pd.read_csv)  
@@ -127,6 +127,14 @@ lets us see the relationships between each pair of variables for each species al
 Looking at the data in this way we can see Iris-Setosa can be easily distinguished by being typically smaller than its compatriots in all areas but Sepal width. While Iris-Virginica and Versicolor are closer 
 together in most areas, Virginica’s slight size edge over versicolor in all but sepal width mean it is also fairly reliably distinguishable from it’s cohorts on these grounds. 
 
+Finally using some methods borrowed from Kmeans testing, we can see what the distribution of data would be like under the assumption there were only two types of Iris in our set using the below code. 
+
+	10. & 11. km=KMeans(n_clusters=2, n_init=10)
+		y_predicted =km.fit_predict(df[['sepal_length', 'sepal_width', 'petal_length', 'petal_width']])
+		km.cluster_centers_
+		df['clusters'] = km.labels_
+		sns.pairplot(df, hue = 'clusters')
+
 References
 1. Reading data-set with Pandas: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html
 2. Loading data-sets in Seaborn: https://seaborn.pydata.org/generated/seaborn.load_dataset.html
@@ -137,3 +145,5 @@ References
 7. Pandas correlation method: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.corr.html
 8. Heatmaping correlations in Seaborn: https://seaborn.pydata.org/generated/seaborn.heatmap.html
 9. Pairplotting in Seaborn: https://seaborn.pydata.org/generated/seaborn.pairplot.html
+10. Kmeans testing in python https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html
+11. Tutorial on Kmeans testing https://machinelearningknowledge.ai/tutorial-for-k-means-clustering-in-python-sklearn/
